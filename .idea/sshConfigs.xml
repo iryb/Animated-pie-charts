@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SshConfigs">
-    <configs>
-      <sshConfig authType="PASSWORD" host="sec.basmaksym.online" id="0f1f1c18-ab6c-4c40-9f83-1fa826669839" port="22" nameFormat="DESCRIPTIVE" username="dh_968h2n" />
-    </configs>
-  </component>
-</project>

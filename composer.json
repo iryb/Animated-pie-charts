@@ -1,0 +1,17 @@
+{
+    "name": "irina/animated-pie-charts",
+    "description": "Create animated pie charts.",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Iryna B",
+            "email": "iryna.burianovata@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {"Inc\\": "./inc"}
+    }
+}

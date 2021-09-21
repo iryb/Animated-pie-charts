@@ -8,6 +8,8 @@ use \Inc\Api\SettingsApi;
 class Admin extends BaseController {
     public $settings;
 
+    public $subpages;
+
     public function __construct()
     {
         $this->settings = new SettingsApi();
@@ -26,7 +28,19 @@ class Admin extends BaseController {
                 'position'   => 110
             ]
         ];
-        $this->settings->addPages( $pages )->register();
+
+        $this->subpages = [
+            [
+                'parent_slug' => 'apc_charts_plugin',
+                'page_title'  => 'Settings',
+                'menu_title'  => 'Settings',
+                'capability'  => 'manage_options',
+                'menu_slug'   => 'apc_settings',
+                'callback'    => function() {echo '<h1>Settings</h1>'; }
+            ]
+        ];
+
+        $this->settings->addPages( $pages )->withSubPage()->addSubPages( $this->subpages )->register();
     }
 
 //    function add_admin_pages()

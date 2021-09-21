@@ -2,33 +2,47 @@
 
 namespace Inc\Pages;
 
-use \Inc\Base\BaseController;
-use \Inc\Api\SettingsApi;
+use Inc\Api\SettingsApi;
+use Inc\Base\BaseController;
+use Inc\Api\Callbacks\AdminCallbacks;
 
 class Admin extends BaseController {
     public $settings;
 
-    public $subpages;
+    public $callbacks;
 
-    public function __construct()
-    {
-        $this->settings = new SettingsApi();
-    }
+    public $pages;
+
+    public $subpages;
 
     public function register()
     {
-        $pages = [
+        $this->settings = new SettingsApi();
+
+        $this->callbacks = new AdminCallbacks();
+
+        $this->setPages();
+
+        $this->setSubPages();
+
+        $this->settings->addPages( $this->pages )->withSubPage()->addSubPages( $this->subpages )->register();
+    }
+
+    public function setPages() {
+        $this->pages = [
             [
                 'page_title' => 'Animated Pie Charts',
                 'menu_title' => 'Charts',
                 'capability' => 'manage_options',
                 'menu_slug'  => 'apc_charts_plugin',
-                'callback'   => function() {echo '<h1>Plugin</h1>'; },
+                'callback'   => array( $this->callbacks, 'adminDashboard'),
                 'icon_url'   => 'dashicons-store',
                 'position'   => 110
             ]
         ];
+    }
 
+    public function setSubPages() {
         $this->subpages = [
             [
                 'parent_slug' => 'apc_charts_plugin',
@@ -36,21 +50,9 @@ class Admin extends BaseController {
                 'menu_title'  => 'Settings',
                 'capability'  => 'manage_options',
                 'menu_slug'   => 'apc_settings',
-                'callback'    => function() {echo '<h1>Settings</h1>'; }
+                'callback'    => array( $this->callbacks, 'adminSettings')
             ]
         ];
-
-        $this->settings->addPages( $pages )->withSubPage()->addSubPages( $this->subpages )->register();
     }
-
-//    function add_admin_pages()
-//    {
-//        add_menu_page( 'Animated Pie Charts', 'Charts', 'manage_options', 'apc_charts_plugin', array($this, 'admin_index'), 'dashicons-store', 110 );
-//    }
-//
-//    function admin_index()
-//    {
-//        require_once $this->plugin_path . 'templates/admin.php';
-//    }
 
 }
